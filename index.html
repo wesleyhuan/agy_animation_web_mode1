@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flourish & Blotts | Hogwarts Official Magical Bookstore</title>
+  <meta name="description" content="Explore ancient spellbooks, potion codices, and rare Hogwarts manuscripts at Flourish & Blotts. Synchronized scroll experience with live Galleons checkout.">
+  
+  <!-- Google Fonts for Harry Potter Wizarding Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="house-gryffindor">
+
+  <!-- Fixed Background Canvas for Video Frame Scrubbing -->
+  <div id="canvas-container">
+    <canvas id="bg-canvas"></canvas>
+    <div class="magical-vignette"></div>
+    <div class="sparkles-container"></div>
+  </div>
+
+  <!-- Preloader Screen -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="crest-loader">⚡</div>
+      <div class="preloader-title">FLOURISH & BLOTTS</div>
+      <div class="preloader-sub">Unlocking the Diagon Alley Archives...</div>
+      <div class="progress-bar-track">
+        <div id="preloader-bar" class="progress-bar-fill"></div>
+      </div>
+      <div id="preloader-percent" class="preloader-percent">0%</div>
+    </div>
+  </div>
+
+  <!-- Part 1 Navigation Header -->
+  <header id="navbar" class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="lightning-bolt">⚡</span>
+        <span class="logo-text">FLOURISH & BLOTTS<span class="logo-sub">HOGWARTS</span></span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#hero" class="nav-link active" data-section="hero">Overview</a>
+        <a href="#catalog" class="nav-link" data-section="catalog">Spellbooks</a>
+        <a href="#house-vault" class="nav-link" data-section="house-vault">House Vault</a>
+        <a href="#artifacts" class="nav-link" data-section="artifacts">Treasures</a>
+        <a href="#owl-post" class="nav-link" data-section="owl-post">Owl Post</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Cart Drawer Toggle -->
+        <button id="cart-btn" class="nav-cart-btn" title="View Magical Cart">
+          <span class="cart-icon">📜</span>
+          <span class="cart-label">Vault Cart</span>
+          <span id="cart-badge" class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+    <div id="scroll-progress" class="scroll-progress-bar"></div>
+  </header>
+
+  <!-- Sliding Shopping Cart Drawer -->
+  <div id="cart-drawer" class="cart-drawer">
+    <div class="cart-drawer-overlay"></div>
+    <div class="cart-drawer-content glass-panel">
+      <div class="cart-header">
+        <h3><span>📜</span> Diagon Alley Order Vault</h3>
+        <button id="cart-close-btn" class="close-btn">&times;</button>
+      </div>
+
+      <div id="cart-items-list" class="cart-items-list">
+        <div class="empty-cart-msg">Your spellbook satchel is empty.<br>Select a tome from the catalog below!</div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total-row">
+          <span>Total Vault Cost:</span>
+          <span id="cart-total-price" class="gold-text font-cinzel">0 Galleons 0 Sickles</span>
+        </div>
+        <button id="checkout-btn" class="btn-primary full-width">
+          <span>Dispatch Owl Post Express 🦉</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Spellbook Preview Modal -->
+  <div id="spell-modal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content glass-panel">
+      <button id="modal-close-btn" class="close-btn">&times;</button>
+      <div class="modal-body">
+        <div class="modal-image-col">
+          <img id="modal-book-img" src="" alt="Book Cover">
+        </div>
+        <div class="modal-info-col">
+          <span id="modal-book-tag" class="house-badge">SPELLBOOK</span>
+          <h2 id="modal-book-title" class="font-cinzel">Book Title</h2>
+          <div id="modal-book-author" class="modal-author font-mono">By Author</div>
+          <p id="modal-book-desc">Detailed spellbook summary...</p>
+          <div class="incantation-box">
+            <span class="box-label font-mono">FEATURED INCANTATION:</span>
+            <div id="modal-incantation" class="incantation-text font-cinzel">"Lumos Maxima"</div>
+          </div>
+          <div class="modal-price-row">
+            <span id="modal-book-price" class="gold-text font-cinzel price-large">15 Galleons</span>
+            <button id="modal-add-cart-btn" class="btn-primary">Add to Satchel 📜</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Scrollable Sections (5 Parts) -->
+  <main id="main-content">
+
+    <!-- PART 1: Hero Overview -->
+    <section id="hero" class="scroll-section hero-section">
+      <div class="hero-content">
+        <div class="badge-pill">
+          <span class="badge-dot"></span>
+          <span>MINISTRY OF MAGIC APPROVED BOOKSTORE</span>
+        </div>
+        <h1 class="hero-title font-cinzel">THE GRAND ARCHIVES <br><span class="text-gold">OF HOGWARTS</span></h1>
+        <p class="hero-description">
+          Step into Diagon Alley’s legendary spellbook shop. Discover ancient incantations, potion codices, and rare wizarding manuscripts synchronized to your scroll journey.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#catalog" class="btn-primary large">
+            <span>Browse Spellbook Catalog</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </a>
+          <a href="#house-vault" class="btn-secondary">
+            <span>Sorting Hat Vault</span>
+          </a>
+        </div>
+
+        <div class="scroll-hint">
+          <div class="snitch-icon">⚡</div>
+          <span>Scroll down to enter the archives</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 2: Essential Magical Spellbook Catalog -->
+    <section id="catalog" class="scroll-section catalog-section">
+      <div class="container">
+        <div class="section-header center">
+          <span class="section-tag font-mono">PART 02 // ESSENTIAL CURRICULUM</span>
+          <h2 class="section-title font-cinzel">Required <span class="text-gold">Hogwarts Textbooks</span></h2>
+          <p class="section-sub">Authentic first-edition spellbooks and potion codices bound in ancient dragonhide leather.</p>
+        </div>
+
+        <div class="books-grid">
+          <!-- Book Card 1 -->
+          <div class="glass-card book-card" data-id="book-1" data-title="The Standard Book of Spells" data-author="Miranda Goshawk" data-price="15" data-sickles="12" data-img="./books/spellbook.jpg" data-tag="Grade 1-7 Spells" data-incantation="Expecto Patronum — Conjures a silver animal guardian spirit to ward off Dementors.">
+            <div class="book-cover-wrapper">
+              <img src="./books/spellbook.jpg" alt="The Standard Book of Spells" class="book-img">
+              <span class="badge-featured">GRADE 1-7</span>
+            </div>
+            <div class="book-info">
+              <span class="book-category font-mono">CHARMS & INCANTATIONS</span>
+              <h3 class="book-title font-cinzel">The Standard Book of Spells</h3>
+              <p class="book-author">By Miranda Goshawk</p>
+              <div class="book-price-row">
+                <span class="book-price gold-text font-cinzel">15 Galleons 12 Sickles</span>
+              </div>
+              <div class="book-card-actions">
+                <button class="btn-primary add-to-cart-btn" data-id="book-1">Add to Satchel 📜</button>
+                <button class="btn-icon preview-btn" data-id="book-1" title="Inspect Spellbook">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Book Card 2 -->
+          <div class="glass-card book-card" data-id="book-2" data-title="Advanced Potion-Making" data-author="Libatius Borage" data-price="22" data-sickles="8" data-img="./books/potions.jpg" data-tag="Advanced Potions" data-incantation="Felix Felicis — Liquid Luck. Grants extraordinary good fortune for 12 hours.">
+            <div class="book-cover-wrapper">
+              <img src="./books/potions.jpg" alt="Advanced Potion-Making" class="book-img">
+              <span class="badge-featured">N.E.W.T. LEVEL</span>
+            </div>
+            <div class="book-info">
+              <span class="book-category font-mono">POTIONS & ALCHEMY</span>
+              <h3 class="book-title font-cinzel">Advanced Potion-Making</h3>
+              <p class="book-author">By Libatius Borage</p>
+              <div class="book-price-row">
+                <span class="book-price gold-text font-cinzel">22 Galleons 8 Sickles</span>
+              </div>
+              <div class="book-card-actions">
+                <button class="btn-primary add-to-cart-btn" data-id="book-2">Add to Satchel 📜</button>
+                <button class="btn-icon preview-btn" data-id="book-2" title="Inspect Spellbook">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Book Card 3 -->
+          <div class="glass-card book-card" data-id="book-3" data-title="The Dark Forces: Self-Protection" data-author="Quentin Trimble" data-price="18" data-sickles="15" data-img="./books/dark_arts.jpg" data-tag="Defense Against Dark Arts" data-incantation="Expelliarmus — The Disarming Charm. Forces an opponent to release their wand.">
+            <div class="book-cover-wrapper">
+              <img src="./books/dark_arts.jpg" alt="The Dark Forces" class="book-img">
+              <span class="badge-featured">DEFENSE CLASSIC</span>
+            </div>
+            <div class="book-info">
+              <span class="book-category font-mono">DEFENSE AGAINST DARK ARTS</span>
+              <h3 class="book-title font-cinzel">The Dark Forces: Self-Protection</h3>
+              <p class="book-author">By Quentin Trimble</p>
+              <div class="book-price-row">
+                <span class="book-price gold-text font-cinzel">18 Galleons 15 Sickles</span>
+              </div>
+              <div class="book-card-actions">
+                <button class="btn-primary add-to-cart-btn" data-id="book-3">Add to Satchel 📜</button>
+                <button class="btn-icon preview-btn" data-id="book-3" title="Inspect Spellbook">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Book Card 4 -->
+          <div class="glass-card book-card" data-id="book-4" data-title="Fantastic Beasts & Where to Find Them" data-author="Newt Scamander" data-price="25" data-sickles="0" data-img="./books/creatures.jpg" data-tag="Magical Zoology" data-incantation="Avis — Spawns a flock of singing songbirds from the tip of your wand.">
+            <div class="book-cover-wrapper">
+              <img src="./books/creatures.jpg" alt="Fantastic Beasts" class="book-img">
+              <span class="badge-featured">MAGIZOOLOGY</span>
+            </div>
+            <div class="book-info">
+              <span class="book-category font-mono">MAGICAL CREATURES</span>
+              <h3 class="book-title font-cinzel">Fantastic Beasts & Where to Find Them</h3>
+              <p class="book-author">By Newt Scamander</p>
+              <div class="book-price-row">
+                <span class="book-price gold-text font-cinzel">25 Galleons</span>
+              </div>
+              <div class="book-card-actions">
+                <button class="btn-primary add-to-cart-btn" data-id="book-4">Add to Satchel 📜</button>
+                <button class="btn-icon preview-btn" data-id="book-4" title="Inspect Spellbook">👁️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 3: Interactive Hogwarts House Vault & Theme Switcher -->
+    <section id="house-vault" class="scroll-section house-section">
+      <div class="container">
+        <div class="section-header center">
+          <span class="section-tag font-mono">PART 03 // HOUSE ARCHIVES</span>
+          <h2 class="section-title font-cinzel">Select Your <span class="text-gold">Hogwarts House</span></h2>
+          <p class="section-sub">Choose your house to tailor your spellbook recommendations and switch your magical aura theme.</p>
+        </div>
+
+        <div class="house-selector-grid">
+          <!-- Gryffindor -->
+          <div class="glass-card house-card active" data-house="gryffindor">
+            <div class="house-crest-icon">🦁</div>
+            <h3 class="font-cinzel">GRYFFINDOR</h3>
+            <p class="house-traits font-mono">Courage, Bravery, Chivalry</p>
+            <div class="house-desc">Recommended: Advanced Defense Grimoires & Heroic Dueling Codices.</div>
+          </div>
+
+          <!-- Slytherin -->
+          <div class="glass-card house-card" data-house="slytherin">
+            <div class="house-crest-icon">🐍</div>
+            <h3 class="font-cinzel">SLYTHERIN</h3>
+            <p class="house-traits font-mono">Ambition, Cunning, Heritage</p>
+            <div class="house-desc">Recommended: Potions Master Manuscripts & Ancient Parseltongue Secrets.</div>
+          </div>
+
+          <!-- Ravenclaw -->
+          <div class="glass-card house-card" data-house="ravenclaw">
+            <div class="house-crest-icon">🦅</div>
+            <h3 class="font-cinzel">RAVENCLAW</h3>
+            <p class="house-traits font-mono">Wisdom, Wit, Intellect</p>
+            <div class="house-desc">Recommended: Arithmancy Treatises & High Transfiguration Studies.</div>
+          </div>
+
+          <!-- Hufflepuff -->
+          <div class="glass-card house-card" data-house="hufflepuff">
+            <div class="house-crest-icon">🦡</div>
+            <h3 class="font-cinzel">HUFFLEPUFF</h3>
+            <p class="house-traits font-mono">Loyalty, Dedication, Patience</p>
+            <div class="house-desc">Recommended: Rare Herbology Compendiums & Magical Plant Alchemy.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 4: Hogwarts Treasures & Ministry Certified Metrics -->
+    <section id="artifacts" class="scroll-section artifacts-section">
+      <div class="container">
+        <div class="metrics-wrapper glass-panel">
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <div class="metric-value font-cinzel" data-target="1000">0<span class="metric-unit">+</span></div>
+              <div class="metric-label font-mono">Rare Spell Tomes in Vault</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value font-cinzel" data-target="99">0<span class="metric-unit">%</span></div>
+              <div class="metric-label font-mono">O.W.L. Exam Pass Rate</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value font-cinzel" data-target="24">0<span class="metric-unit">hr</span></div>
+              <div class="metric-label font-mono">Express Owl Post Delivery</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value font-cinzel" data-target="5">0<span class="metric-unit">★</span></div>
+              <div class="metric-label font-mono">Ministry Certification</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 5: Owl Post Newsletter & Order Dispatch -->
+    <section id="owl-post" class="scroll-section owl-section">
+      <div class="container">
+        <div class="cta-box glass-panel">
+          <div class="cta-badge font-mono">MINISTRY CERTIFIED COURIER</div>
+          <h2 class="font-cinzel">Dispatch By <span class="text-gold">Owl Post Express</span></h2>
+          <p>Subscribe to receive Daily Prophet book drops, secret spell release alerts, and Hogwarts discounts.</p>
+
+          <form id="subscribe-form" class="subscribe-form">
+            <div class="input-group">
+              <input type="email" placeholder="Enter your wizarding owl address..." required>
+              <button type="submit" class="btn-primary">
+                <span>Dispatch Owl 🦉</span>
+              </button>
+            </div>
+            <div id="form-message" class="form-message"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand font-cinzel">
+        <span class="lightning-bolt">⚡</span>
+        <span>FLOURISH & BLOTTS ARCHIVES</span>
+      </div>
+      <p class="footer-copy">&copy; 2026 Flourish & Blotts Booksellers. Diagon Alley, London.</p>
+      <div class="footer-links font-mono">
+        <a href="#hero">Return to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

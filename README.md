@@ -2,7 +2,11 @@
 
 An immersive, high-performance web experience featuring **Apple-style canvas scroll-driven video scrubbing** paired with a **5-part Harry Potter Online Bookshop**.
 
-![Flourish & Blotts Showcase](public/books/spellbook.jpg)
+## 🎬 Demo Video
+
+[![Flourish & Blotts Interactive Demo](https://img.youtube.com/vi/mBKhg7TZwF0/maxresdefault.jpg)](https://www.youtube.com/watch?v=mBKhg7TZwF0)
+
+🍿 **[Watch Full Video Walkthrough on YouTube](https://www.youtube.com/watch?v=mBKhg7TZwF0)**
 
 ---
 

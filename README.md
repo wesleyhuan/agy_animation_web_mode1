@@ -10,6 +10,18 @@ An immersive, high-performance web experience featuring **Apple-style canvas scr
 
 ---
 
+## 🎨 Reusable Agent Skill (`canvas-scroll-web`)
+
+This repository includes a reusable **Antigravity AI Agent Skill** located at [`.agents/skills/canvas-scroll-web/SKILL.md`](.agents/skills/canvas-scroll-web/SKILL.md). 
+
+It contains the complete blueprint and Python frame-extraction scripts to recreate high-performance scroll-driven web animations for any background video or image sequence.
+
+### Included Skill Files:
+- **[SKILL.md](.agents/skills/canvas-scroll-web/SKILL.md)**: Full step-by-step instructions for canvas scrub engine, Lerp interpolation, Lenis smooth scrolling, and glassmorphic UI overlay rules.
+- **[extract_frames.py](.agents/skills/canvas-scroll-web/scripts/extract_frames.py)**: Python OpenCV helper script to extract 120 optimized JPEGs from any `.mp4` video.
+
+---
+
 ## 🌟 Key Features
 
 1. **Continuous Frame Scrubbing Engine**
@@ -65,6 +77,7 @@ npm run build
 - **Animation & Physics**: [GSAP](https://greensock.com/gsap/) (ScrollTrigger), [Lenis](https://lenis.darkroom.engineering/)
 - **Bundler**: [Vite](https://vitejs.dev/)
 - **Media Engine**: Python OpenCV frame extraction (`extract_frames.py`)
+- **Agent Skill**: Antigravity Customization (`canvas-scroll-web`)
 
 ---
 
